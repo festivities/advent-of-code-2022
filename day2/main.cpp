@@ -125,7 +125,7 @@ int main(int argc, char *argv[]){
         }
 
         std::printf("Your score is: %d!\n"
-                    "Your opponent's score is: %d!",
+                    "Your opponent's score is: %d!\n",
                     playerTwoScore, playerOneScore);
 
         auto endTime = std::chrono::high_resolution_clock::now();
