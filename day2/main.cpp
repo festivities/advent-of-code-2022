@@ -92,6 +92,8 @@ void rpsEvaluate(const char &choiceOne, const char &choiceTwo, int &playerOneSco
 }
 
 int main(int argc, char *argv[]){
+    auto startTime = std::chrono::high_resolution_clock::now();
+
     // trying something new, avoiding c++ style streams
     std::FILE *inputFile = std::fopen(argv[1], "r+");
 
@@ -126,9 +128,13 @@ int main(int argc, char *argv[]){
                     "Your opponent's score is: %d!",
                     playerTwoScore, playerOneScore);
 
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float, std::milli> duration = endTime - startTime;
+        std::printf("Execution time: %f milliseconds", duration.count());
+
         return 0;
     }
 
-    perror("Error");
+    std::perror("Error");
     return 1;
 }

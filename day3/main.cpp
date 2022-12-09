@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -26,19 +27,31 @@ int main(int argv, char *argc[]){
         }
 
         char itemType;
-        char priorityList[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const char priorityList[53] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int prioritySum = 0;
 
         for(std::vector<std::vector<std::string>>::const_reference index : rucksacks){
             // compare the compartments' lengths of each rucksack in rucksacks
             if(index[0].length() == index[1].length()){ // just to be safe =)
-                // for every item in the first compartment, use said item to find a common element in the second compartment
-                for(const char &buf : index[0]){
-                    if(index[1].find(buf) != std::string::npos){
-                        itemType = buf;
+                // for every item in first compartment, use said item to find the common element in second compartment
+                for(const char &x : index[0]){
+                    if(index[1].find(x) != std::string::npos){
+                        itemType = x;
+
+                        for(std::size_t y = 0; y < 52; ++y){
+                            if(itemType == priorityList[y]){
+                                prioritySum += static_cast<int>(++y);
+                            }
+                        }
+
+                        // this very important!!!! spent an hour suffering bc i forgot this keyword aaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        break;
                     }
                 }
             }
         }
+
+        std::cout << "Sum of all the priorities is: " << prioritySum << "!\n----------------------------------------\n";
 
         auto endTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<float, std::milli> duration = endTime - startTime;
@@ -47,6 +60,6 @@ int main(int argv, char *argc[]){
         return 0;
     }
 
-    std::cerr << "balls" << std::endl;
+    std::cerr << "Usage: \"day3.exe input.txt\"" << std::endl;
     return 1;
 }
