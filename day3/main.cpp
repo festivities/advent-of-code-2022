@@ -5,10 +5,10 @@
 #include <fstream>
 #include <chrono>
 
-int main(int argv, char *argc[]){
+int main(int argc, char *argv[]){
     auto startTime = std::chrono::high_resolution_clock::now();
 
-    std::ifstream inputFile(argc[1]);
+    std::ifstream inputFile(argv[1]);
 
     if(inputFile.is_open()){
         std::string firstCompartment, secondCompartment;
